@@ -31,8 +31,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 RUN apt-get install -y libmagickwand-6.q16-dev --no-install-recommends && \
     ln -s /usr/lib/x86_64-linux-gnu/ImageMagick-6.8.9/bin-Q16/MagickWand-config /usr/bin && \
+    yes '' | pecl install apcu-4.0.11 && \
     pecl install imagick && \
-    echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini
+    docker-php-ext-enable apcu imagick
 
 COPY www /var/www/html
 
